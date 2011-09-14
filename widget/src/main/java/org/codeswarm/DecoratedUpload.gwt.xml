@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "//gwt-module/"
+    "http://google-web-toolkit.googlecode.com/svn/releases/2.3/distro-source/core/src/gwt-module.dtd">
+<module>
+
+  <source path="decoratedupload"/>
+
+  <inherits name="com.google.gwt.user.User"/>
+
+  <replace-with class="org.codeswarm.decoratedupload.DecoratedUpload.DecoratedFileUploadImplClick">
+    <when-type-is class="org.codeswarm.decoratedupload.DecoratedUpload.DecoratedFileUploadImpl"/>
+    <any>
+      <when-property-is name="user.agent" value="ie6"/>
+      <when-property-is name="user.agent" value="ie8" />
+      <when-property-is name="user.agent" value="safari"/>
+    </any>
+  </replace-with>
+
+  <replace-with class="org.codeswarm.decoratedupload.DecoratedUpload.DecoratedFileUploadImplNoClick">
+    <when-type-is class="org.codeswarm.decoratedupload.DecoratedUpload.DecoratedFileUploadImpl"/>
+    <any>
+      <when-property-is name="user.agent" value="gecko"/>
+      <when-property-is name="user.agent" value="gecko1_8" />
+      <when-property-is name="user.agent" value="opera"/>
+    </any>
+  </replace-with>
+
+</module>

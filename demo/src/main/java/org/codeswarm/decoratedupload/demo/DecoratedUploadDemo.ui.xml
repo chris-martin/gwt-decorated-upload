@@ -1,0 +1,20 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder
+    xmlns:ui='urn:ui:com.google.gwt.uibinder'
+    xmlns:g='urn:import:com.google.gwt.user.client.ui'
+    xmlns:du='urn:import:org.codeswarm.decoratedupload'>
+
+  <g:HTMLPanel>
+    <div style="margin-left: 100px;">
+      <div style="margin-top: 100px;">
+        <h1>Label</h1>
+        <du:DecoratedUpload ui:field="label"/>
+      </div>
+      <div style="margin-top: 100px;">
+        <h1>Button</h1>
+        <du:DecoratedUpload ui:field="button"/>
+      </div>
+    </div>
+  </g:HTMLPanel>
+
+</ui:UiBinder>
