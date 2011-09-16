@@ -1,0 +1,40 @@
+.root {
+  margin: 0 100px 100px 100px;
+  position: relative;
+}
+.section {
+  margin-top: 40px;
+  clear: both;
+}
+.section h1 {
+  border-bottom: 2px solid gray;
+  color: gray;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+.horizontal {
+  display: block;
+  float: left;
+}
+.vertical {
+  display: block;
+}
+.margin {
+  margin: 1em;
+}
+@sprite .open span {
+  gwt-image: "open";
+}
+@sprite .save span {
+  gwt-image: "save";
+}
+.iconButton {
+  padding: 1px 5px 3px 5px;
+  white-space: nowrap;
+}
+.iconButton span {
+  display: inline-block;
+  position: relative;
+  top: 3px;
+  right: 2px;
+}
