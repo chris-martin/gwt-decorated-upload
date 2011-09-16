@@ -36,7 +36,7 @@
 
       <div class="{style.section}">
         <h1>
-          Stylish Upload and Download buttons
+          Stylish Upload and Download Buttons
         </h1>
         <g:FormPanel>
           <g:HTMLPanel>
