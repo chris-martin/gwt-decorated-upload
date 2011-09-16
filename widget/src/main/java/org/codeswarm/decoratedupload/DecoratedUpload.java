@@ -188,8 +188,6 @@ public class DecoratedUpload extends Composite implements HasText, HasName, HasC
     public void init(AbsolutePanel container, FileUploadWithMouseEvents input, Style style) {
       super.init(container, input, style);
       container.add(input, 500, 500);
-      DOM.setStyleAttribute(container.getElement(), "cssFloat", "left");
-      DOM.setStyleAttribute(container.getElement(), "display", "inline");
       DOM.setStyleAttribute(input.getElement(), "top", "-10000px");
       DOM.setStyleAttribute(input.getElement(), "left", "-10000px");
     }
@@ -241,7 +239,6 @@ public class DecoratedUpload extends Composite implements HasText, HasName, HasC
 
       // Not using the GWT 2.0.x way to set Style attributes in order to be
       // compatible with old GWT releases
-      DOM.setStyleAttribute(container.getElement(), "cssFloat", "left");
       DOM.setStyleAttribute(wrapper.getElement(), "textAlign", "left");
       DOM.setStyleAttribute(wrapper.getElement(), "zIndex", "1");
       DOM.setStyleAttribute(input.getElement(), "marginLeft", "-1500px");

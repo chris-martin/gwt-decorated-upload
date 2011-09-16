@@ -11,18 +11,18 @@ import org.codeswarm.decoratedupload.DecoratedUpload;
 
 public class DecoratedUploadDemo implements EntryPoint {
 
-    interface Binder extends UiBinder<IsWidget, DecoratedUploadDemo> { }
-    private static final Binder BINDER = GWT.create(Binder.class);
+  interface Binder extends UiBinder<IsWidget, DecoratedUploadDemo> { }
+  private static final Binder BINDER = GWT.create(Binder.class);
 
-    @UiField(provided = true) DecoratedUpload label;
-    @UiField(provided = true) DecoratedUpload button1, button2;
+  @UiField(provided = true) DecoratedUpload label, button1, button2, button3;
 
-    @Override
-    public void onModuleLoad() {
-        label = new DecoratedUpload(new Label("Upload"));
-        button1 = new DecoratedUpload("Upload");
-        button2 = new DecoratedUpload("Upload");
-        RootLayoutPanel.get().add(BINDER.createAndBindUi(this));
-    }
+  @Override
+  public void onModuleLoad() {
+    label = new DecoratedUpload(new Label("Upload"));
+    button1 = new DecoratedUpload("Upload");
+    button2 = new DecoratedUpload("Upload");
+    button3 = new DecoratedUpload("Upload");
+    RootLayoutPanel.get().add(BINDER.createAndBindUi(this));
+  }
 
 }

@@ -14,26 +14,48 @@
       font-weight: bold;
       font-family: sans-serif;
     }
+    .horizontal {
+      display: block;
+      float: left;
+    }
+    .vertical {
+      display: block;
+    }
   </ui:style>
 
   <g:HTMLPanel>
     <div style="margin-left: 100px;">
+
       <div class="{style.section}">
         <h1>Label</h1>
         <du:DecoratedUpload ui:field="label"/>
       </div>
+
       <div class="{style.section}">
         <h1>Button</h1>
         <du:DecoratedUpload ui:field="button1"/>
       </div>
+
       <div class="{style.section}">
-        <h1>Three Buttons in a FlowPanel</h1>
-        <g:FlowPanel>
-          <g:Button>Button on the left</g:Button>
+        <h1>Button List, Horizontal</h1>
+        <g:Button addStyleNames="{style.horizontal}">One</g:Button>
+        <g:Button addStyleNames="{style.horizontal}">Two</g:Button>
+        <div class="{style.horizontal}">
           <du:DecoratedUpload ui:field="button2"/>
-          <g:Button>Button on the right</g:Button>
-        </g:FlowPanel>
+        </div>
+        <g:Button addStyleNames="{style.horizontal}">Four</g:Button>
       </div>
+
+      <div class="{style.section}">
+        <h1>Button List, Vertical</h1>
+        <g:Button addStyleNames="{style.vertical}">One</g:Button>
+        <g:Button addStyleNames="{style.vertical}">Two</g:Button>
+        <div class="{style.vertical}">
+          <du:DecoratedUpload ui:field="button3"/>
+        </div>
+        <g:Button addStyleNames="{style.vertical}">Four</g:Button>
+      </div>
+
     </div>
   </g:HTMLPanel>
 
