@@ -17,12 +17,13 @@ public class DecoratedUploadDemo implements EntryPoint {
     private static final Binder BINDER = GWT.create(Binder.class);
 
     @UiField(provided = true) DecoratedUpload label;
-    @UiField(provided = true) DecoratedUpload button;
+    @UiField(provided = true) DecoratedUpload button1, button2;
 
     @Override
     public void onModuleLoad() {
         label = new DecoratedUpload(new Label("Upload"));
-        button = new DecoratedUpload(new Button("Upload"));
+        button1 = new DecoratedUpload(new Button("Upload"));
+        button2 = new DecoratedUpload(new Button("Upload"));
         RootLayoutPanel.get().add(BINDER.createAndBindUi(this));
     }
 

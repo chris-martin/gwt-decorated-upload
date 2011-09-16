@@ -4,15 +4,36 @@
     xmlns:g='urn:import:com.google.gwt.user.client.ui'
     xmlns:du='urn:import:org.codeswarm.decoratedupload'>
 
+  <ui:style>
+    .section {
+      margin-top: 80px;
+    }
+    .section h1 {
+      border-bottom: 2px solid gray;
+      color: gray;
+      font-weight: bold;
+      font-family: sans-serif;
+    }
+  </ui:style>
+
   <g:HTMLPanel>
     <div style="margin-left: 100px;">
-      <div style="margin-top: 100px;">
+      wegergER?GER
+      <div class="{style.section}">
         <h1>Label</h1>
         <du:DecoratedUpload ui:field="label"/>
       </div>
-      <div style="margin-top: 100px;">
+      <div class="{style.section}">
         <h1>Button</h1>
-        <du:DecoratedUpload ui:field="button"/>
+        <du:DecoratedUpload ui:field="button1"/>
+      </div>
+      <div class="{style.section}">
+        <h1>Three Buttons in a FlowPanel</h1>
+        <g:FlowPanel>
+          <g:Button>Button on the left</g:Button>
+          <du:DecoratedUpload ui:field="button2"/>
+          <g:Button>Button on the right</g:Button>
+        </g:FlowPanel>
       </div>
     </div>
   </g:HTMLPanel>
