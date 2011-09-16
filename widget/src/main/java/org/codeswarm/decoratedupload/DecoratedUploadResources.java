@@ -8,7 +8,7 @@ public interface DecoratedUploadResources extends ClientBundle {
   @Source("DecoratedUpload.css")
   Style style();
 
-  interface Style extends CssResource, DecoratedUpload.Style {
+  interface Style extends CssResource, DecoratedUpload.StyleNames {
     String container();
     String disabled();
   }
