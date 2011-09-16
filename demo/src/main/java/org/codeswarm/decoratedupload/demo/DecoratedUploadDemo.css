@@ -38,3 +38,10 @@
   top: 3px;
   right: 2px;
 }
+@if user.agent ie6 {
+  /* http://jehiah.cz/a/button-width-in-ie */
+  .root button {
+    width: auto;
+    overflow: visible;
+  }
+}
