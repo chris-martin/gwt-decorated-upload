@@ -20,6 +20,7 @@
 package org.codeswarm.decoratedupload;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
@@ -40,18 +41,22 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.HasName;
 import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
  * A widget which hides a FileUpload showing a clickable widget (normally a button).
  */
-public class DecoratedUpload extends Composite implements HasText, HasName, HasChangeHandlers {
+public class DecoratedUpload extends Composite implements HasName,
+    HasChangeHandlers, AcceptsOneWidget, HasWidgets {
 
   /**
    * A FileUpload which implements onChange, onMouseOver and onMouseOut events.
@@ -60,7 +65,8 @@ public class DecoratedUpload extends Composite implements HasText, HasName, HasC
    * we put it here in order to be compatible with older Gwt versions.
    *
    */
-  public static class FileUploadWithMouseEvents extends FileUpload implements HasMouseOverHandlers, HasMouseOutHandlers, HasChangeHandlers {
+  public static class FileUploadWithMouseEvents extends FileUpload
+      implements HasMouseOverHandlers, HasMouseOutHandlers, HasChangeHandlers {
 
     public HandlerRegistration addChangeHandler(ChangeHandler handler) {
       return addDomHandler(handler, ChangeEvent.getType());
@@ -337,7 +343,7 @@ public class DecoratedUpload extends Composite implements HasText, HasName, HasC
    */
   public DecoratedUpload(Widget button, StyleNames style) {
     this(style);
-    setButton(button);
+    initWidget(button);
   }
 
   public DecoratedUpload(Widget button) {
@@ -401,7 +407,7 @@ public class DecoratedUpload extends Composite implements HasText, HasName, HasC
     super.onAttach();
     if (button == null) {
       button = new Button(text);
-      setButton(button);
+      setWidget((IsWidget) button);
     }
     new Timer(){
       public void run() {
@@ -412,16 +418,40 @@ public class DecoratedUpload extends Composite implements HasText, HasName, HasC
 
   /**
    * Set the button the user has to click on to show the browse dialog.
+   *
+   * {@inheritDoc}
    */
-  public void setButton(Widget button) {
-    assert button instanceof HasClickHandlers : "Button should implement HasClickHandlers";
+  @Override
+  public void setWidget(final IsWidget w) {
+    assert w instanceof HasClickHandlers : "Button should implement HasClickHandlers";
     if (this.button != null) {
       container.remove(this.button);
     }
-    this.button = button;
-    container.add(button, 0, 0);
-    impl.setButton(button);
+    this.button = w.asWidget();
+    container.add(w, 0, 0);
+    impl.setButton(w.asWidget());
     updateSize();
+  }
+
+  @Override
+  public void add(final Widget w) {
+    setWidget((IsWidget) w);
+  }
+
+  @Override
+  public void clear() {
+    setWidget((IsWidget) new Button());
+    setText("");
+  }
+
+  @Override
+  public Iterator<Widget> iterator() {
+    return container.iterator();
+  }
+
+  @Override
+  public boolean remove(final Widget w) {
+    return container.remove(w);
   }
 
   /**
