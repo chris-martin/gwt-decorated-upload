@@ -1,0 +1,35 @@
+@external gwt-*;
+
+.container {
+  margin-right: 5px;
+}
+
+.container .gwt-Button,
+.container .gwt-Anchor,
+.container .gwt-Label {
+  white-space: nowrap;
+  font-size: 10px;
+  min-height: 15px;
+}
+
+.container .gwt-Anchor,
+.container .gwt-Label {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.container .gwt-Button:HOVER,
+.container .gwt-Button-over,
+.container .gwt-Anchor-over,
+.container .gwt-Label-over {
+  color: #af6b29;
+}
+
+.disabled .gwt-Button,
+.disabled .gwt-Anchor,
+.disabled .gwt-Label {
+  color: gray;
+}
+
+.over { }

@@ -18,7 +18,6 @@
 
   <g:HTMLPanel>
     <div style="margin-left: 100px;">
-      wegergER?GER
       <div class="{style.section}">
         <h1>Label</h1>
         <du:DecoratedUpload ui:field="label"/>

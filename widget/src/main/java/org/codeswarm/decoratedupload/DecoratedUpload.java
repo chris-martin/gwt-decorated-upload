@@ -48,48 +48,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * A widget which hides a FileUpload showing a clickable, customizable
- * and stylable Widget, normally a button.
- *
- * If you want to use this widget in your application, define these
- * css rules:
- *
- * <pre>
-.DecoratedFileUpload {
-  margin-right: 5px;
-}
-
-.DecoratedFileUpload .gwt-Button,
-.DecoratedFileUpload .gwt-Anchor,
-.DecoratedFileUpload .gwt-Label {
-  white-space: nowrap;
-  font-size: 10px;
-  min-height: 15px;
-}
-
-.DecoratedFileUpload .gwt-Anchor,
-.DecoratedFileUpload .gwt-Label {
-  color: blue;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.DecoratedFileUpload .gwt-Button:HOVER,
-.DecoratedFileUpload .gwt-Button-over,
-.DecoratedFileUpload .gwt-Anchor-over,
-.DecoratedFileUpload .gwt-Label-over {
-  color: #af6b29;
-}
-
-.DecoratedFileUpload-disabled .gwt-Button,
-.DecoratedFileUpload-disabled .gwt-Anchor,
-.DecoratedFileUpload-disabled .gwt-Label {
-  color: grey;
-}
- * </pre>
- *
- * @author Manuel Carrasco Monino
- *
+ * A widget which hides a FileUpload showing a clickable widget (normally a button).
  */
 public class DecoratedUpload extends Composite implements HasText, HasName, HasChangeHandlers {
 
@@ -125,10 +84,12 @@ public class DecoratedUpload extends Composite implements HasText, HasName, HasC
     protected Widget button;
     protected AbsolutePanel container;
     protected FileUploadWithMouseEvents input;
+    protected Style style;
 
-    public void init(AbsolutePanel container, FileUploadWithMouseEvents input) {
+    public void init(AbsolutePanel container, FileUploadWithMouseEvents input, Style style) {
       this.container = container;
       this.input = input;
+      this.style = style;
     }
 
     public void setSize(String width, String height) {
@@ -189,7 +150,7 @@ public class DecoratedUpload extends Composite implements HasText, HasName, HasC
         ((HasMouseOverHandlers) button).addMouseOverHandler(new MouseOverHandler() {
           public void onMouseOver(MouseOverEvent event) {
             button.addStyleDependentName(STYLE_BUTTON_OVER_SUFFIX);
-            container.addStyleDependentName(STYLE_BUTTON_OVER_SUFFIX);
+            if (style != null) container.addStyleName(style.over());
           }
         });
       }
@@ -197,7 +158,7 @@ public class DecoratedUpload extends Composite implements HasText, HasName, HasC
         ((HasMouseOutHandlers) button).addMouseOutHandler(new MouseOutHandler() {
           public void onMouseOut(MouseOutEvent event) {
             button.removeStyleDependentName(STYLE_BUTTON_OVER_SUFFIX);
-            container.removeStyleDependentName(STYLE_BUTTON_OVER_SUFFIX);
+            if (style != null) container.removeStyleName(style.over());
           }
         });
       }
@@ -224,8 +185,8 @@ public class DecoratedUpload extends Composite implements HasText, HasName, HasC
       elem.click();
     }-*/;
 
-    public void init(AbsolutePanel container, FileUploadWithMouseEvents input) {
-      super.init(container, input);
+    public void init(AbsolutePanel container, FileUploadWithMouseEvents input, Style style) {
+      super.init(container, input, style);
       container.add(input, 500, 500);
       DOM.setStyleAttribute(container.getElement(), "cssFloat", "left");
       DOM.setStyleAttribute(container.getElement(), "display", "inline");
@@ -271,8 +232,8 @@ public class DecoratedUpload extends Composite implements HasText, HasName, HasC
 
     private SimplePanel wrapper;
 
-    public void init(AbsolutePanel container, FileUploadWithMouseEvents input) {
-      super.init(container, input);
+    public void init(AbsolutePanel container, FileUploadWithMouseEvents input, Style style) {
+      super.init(container, input, style);
       wrapper = new SimplePanel();
       wrapper.add(input);
       container.add(wrapper, 0, 0);
@@ -323,26 +284,51 @@ public class DecoratedUpload extends Composite implements HasText, HasName, HasC
   }
 
   private static final String STYLE_BUTTON_OVER_SUFFIX = "over";
-  private static final String STYLE_CONTAINER = "DecoratedFileUpload";
-  private static final String STYLE_DISABLED = "disabled";
   protected Widget button;
   protected AbsolutePanel container;
   protected FileUploadWithMouseEvents input = new FileUploadWithMouseEvents();
   protected boolean reuseButton = false;
   private DecoratedFileUploadImpl impl;
   private String text = "";
+  private final Style style;
+
+  public interface Style {
+    String container();
+    String disabled();
+    String over();
+  }
+
+  public static Style defaultStyle() {
+    DecoratedUploadResources resources = GWT.create(DecoratedUploadResources.class);
+    DecoratedUploadResources.Style style = resources.style();
+    style.ensureInjected();
+    return style;
+  }
 
   /**
    * Default constructor, it renders a default button with the provided
    * text when the element is attached.
    */
-  public DecoratedUpload(String text) {
+  public DecoratedUpload(String text, Style style) {
+    this.style = style;
     impl = GWT.create(DecoratedFileUploadImpl.class);
     container = new AbsolutePanel();
-    container.addStyleName(STYLE_CONTAINER);
+    if (style != null) container.addStyleName(style.container());
     initWidget(container);
-    impl.init(container, input);
+    impl.init(container, input, style);
     this.text = text;
+  }
+
+  public DecoratedUpload(String text) {
+    this(text, null);
+  }
+
+  public DecoratedUpload() {
+    this("");
+  }
+
+  public DecoratedUpload(Style style) {
+    this("", style);
   }
 
   /**
@@ -350,9 +336,13 @@ public class DecoratedUpload extends Composite implements HasText, HasName, HasC
    * user has to click to show the browse file dialog.
    * The widget has to implement the HasClickHandlers interface.
    */
-  public DecoratedUpload(Widget button) {
-    this("");
+  public DecoratedUpload(Widget button, Style style) {
+    this(style);
     setButton(button);
+  }
+
+  public DecoratedUpload(Widget button) {
+    this(button, null);
   }
 
   /**
@@ -446,13 +436,9 @@ public class DecoratedUpload extends Composite implements HasText, HasName, HasC
   /**
    * Enable or disable the FileInput.
    */
-  public void setEnabled(boolean b) {
-    input.setEnabled(b);
-    if (b) {
-      container.removeStyleDependentName(STYLE_DISABLED);
-    } else {
-      container.addStyleDependentName(STYLE_DISABLED);
-    }
+  public void setEnabled(boolean enabled) {
+    input.setEnabled(enabled);
+    if (style != null) container.setStyleName(style.disabled(), !enabled);
   }
 
   /**
