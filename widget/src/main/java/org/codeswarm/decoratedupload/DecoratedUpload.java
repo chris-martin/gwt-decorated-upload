@@ -22,6 +22,7 @@ package org.codeswarm.decoratedupload;
 import java.util.HashMap;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -237,15 +238,16 @@ public class DecoratedUpload extends Composite implements HasText, HasName, HasC
       container.add(wrapper, 0, 0);
       wrapper.setStyleName("wrapper");
 
-      // Not using the GWT 2.0.x way to set Style attributes in order to be
-      // compatible with old GWT releases
-      DOM.setStyleAttribute(wrapper.getElement(), "textAlign", "left");
-      DOM.setStyleAttribute(wrapper.getElement(), "zIndex", "1");
-      DOM.setStyleAttribute(input.getElement(), "marginLeft", "-1500px");
-      DOM.setStyleAttribute(input.getElement(), "fontSize", "500px");
-      DOM.setStyleAttribute(input.getElement(), "borderWidth", "0px");
-      DOM.setStyleAttribute(input.getElement(), "opacity", "0");
-      DOM.setElementAttribute(input.getElement(), "size", "1");
+      Style wrapperStyle = wrapper.getElement().getStyle();
+      wrapperStyle.setProperty("textAlign", "left");
+      wrapperStyle.setZIndex(1);
+
+      Style inputStyle = input.getElement().getStyle();
+      inputStyle.setMarginLeft(-1500, Style.Unit.PX);
+      inputStyle.setFontSize(500, Style.Unit.PX);
+      inputStyle.setBorderWidth(0, Style.Unit.PX);
+      inputStyle.setOpacity(0);
+      inputStyle.setProperty("size", "1");
 
       // Trigger over and out handlers which already exist in the covered button.
       input.addMouseOverHandler(new MouseOverHandler() {
