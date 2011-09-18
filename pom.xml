@@ -5,36 +5,17 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.sonatype.oss</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>7</version>
-  </parent>
-
   <groupId>org.codeswarm</groupId>
-  <artifactId>gwt-decorated-upload-parent</artifactId>
+  <artifactId>gwt-decorated-upload-aggregator</artifactId>
   <version>1.0</version>
   <packaging>pom</packaging>
 
-  <name>parent pom for gwt-decorated-upload</name>
+  <name>GWT Decorated Upload Aggregator</name>
+  <description>aggregator pom for gwt-decorated-upload and demo projects</description>
 
   <modules>
     <module>widget</module>
     <module>demo</module>
   </modules>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.0.2</version>
-        <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
 
 </project>
